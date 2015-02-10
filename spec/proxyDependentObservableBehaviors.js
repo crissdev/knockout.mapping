@@ -390,12 +390,13 @@
 
             var mapped = ko.mapping.fromJS(obj, mapping);
             var i = mapped.inner;
+            assert.equal(i.evaluationCount, 1); //it's evaluated once prior to fromJS returning
 
             // change the dependency
             i.dependency(2);
 
             // should also have re-evaluated
-            assert.notEqual(i.evaluationCount, 0);
+            assert.equal(i.evaluationCount, 2);
         });
 
         //taken from outline defined at https://github.com/SteveSanderson/knockout.mapping/issues/95#issuecomment-12275070
