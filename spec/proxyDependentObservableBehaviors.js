@@ -42,7 +42,8 @@
                             if (createOptions.useReadCallback) {
                                 mapped.DO = createComputed({
                                     read: doData,
-                                    deferEvaluation: !!createOptions.deferEvaluation
+                                    deferEvaluation: !!createOptions.deferEvaluation,
+                                    pure: !!createOptions.pure
                                 }, mapped);
                             }
                             else if (createOptions.useWriteCallback) {
@@ -57,7 +58,8 @@
                             }
                             else {
                                 mapped.DO = createComputed(doData, mapped, {
-                                    deferEvaluation: !!createOptions.deferEvaluation
+                                    deferEvaluation: !!createOptions.deferEvaluation,
+                                    pure: !!createOptions.pure
                                 });
                             }
 
@@ -271,6 +273,17 @@
             }, 0);
         });
 
+        QUnit.test('pure dependentObservables should NOT be auto-evaluated after mapping', function(assert) {
+            var done = assert.async();
+            assert.expect(1);
+
+            var mapped = testInfo.create({pure: true});
+            window.setTimeout(function() {
+                assert.equal(testInfo.evaluationCount, 0);
+                done();
+            }, 0);
+        });
+
         QUnit.test('un-deferred dependentObservables with read callback that are NOT used immediately SHOULD be auto-evaluated after mapping', function(assert) {
             var done = assert.async();
             assert.expect(1);
@@ -299,6 +312,17 @@
             assert.expect(1);
 
             var mapped = testInfo.create({deferEvaluation: true, useReadCallback: true});
+            window.setTimeout(function() {
+                assert.equal(testInfo.evaluationCount, 0);
+                done();
+            }, 0);
+        });
+
+        QUnit.test('pure dependentObservables with read callback should NOT be auto-evaluated after mapping', function(assert) {
+            var done = assert.async();
+            assert.expect(1);
+
+            var mapped = testInfo.create({pure: true, useReadCallback: true});
             window.setTimeout(function() {
                 assert.equal(testInfo.evaluationCount, 0);
                 done();

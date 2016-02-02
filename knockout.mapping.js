@@ -277,6 +277,7 @@
             }
 
             var realDeferEvaluation = options.deferEvaluation;
+            var realIsPure = options.pure;
 
             var isRemoved = false;
 
@@ -310,7 +311,7 @@
             options.deferEvaluation = true; // will either set for just options, or both read/options.
             var realDependentObservable = realKoDependentObservable(read, owner, options);
 
-            if (!realDeferEvaluation) {
+            if (!realDeferEvaluation && !realIsPure) {
                 realDependentObservable = wrap(realDependentObservable);
                 dependentObservables.push(realDependentObservable);
             }
