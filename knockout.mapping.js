@@ -716,9 +716,7 @@
         }
         else {
             for (var propertyName in rootObject) {
-                if (rootObject.hasOwnProperty(propertyName)) {
                     visitorCallback(propertyName);
-                }
             }
         }
     }
