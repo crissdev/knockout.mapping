@@ -3,6 +3,7 @@
   "version": "2.6.0",
   "description": "Knockout Mapping plugin",
   "main": "dist/knockout.mapping.js",
+  "types": "types/knockout.mapping.d.ts",
   "files": [
     "dist",
     "HISTORY.md"
